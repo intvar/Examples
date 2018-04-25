@@ -2,11 +2,19 @@ import Queue from './queue';
 import Field from './field';
 import Canvas from './canvas';
 
-const SIZE_CELL = 25;
-const canvas = new Canvas(SIZE_CELL);
-const field = new Field(canvas.numbOfCellsInRow, canvas.numbOfCellsInLine);
-field.subsribe('ANIMATE', canvas.paintOverCell.bind(canvas));
-field.subsribe('KILL', canvas.clearCell.bind(canvas));
+let sizeCell = 25;
+let canvas;
+let field;
+let intervalId;
+
+function init() {
+  canvas = new Canvas(sizeCell);
+  canvas.drawGrid();
+  field = new Field(canvas.numbOfCellsInRow, canvas.numbOfCellsInLine);
+  field.subsribe('ANIMATE', canvas.paintOverCell.bind(canvas));
+  field.subsribe('KILL', canvas.clearCell.bind(canvas));
+}
+init();
 
 function clickCanvasHandler(event) {
   const coordinates = canvas.getCoordinateFromPx({
@@ -37,7 +45,6 @@ function run() {
   queue.execute();
 }
 
-let intervalId;
 function clickStartHandler(e) {
   const TIME_MS = 200;
   if (intervalId) {
@@ -50,6 +57,14 @@ function clickStartHandler(e) {
   }
 }
 
+function sizeCellInputChange(e) {
+  sizeCell = +e.target.value;
+  init();
+}
+
 canvas.canvasEl.addEventListener('click', clickCanvasHandler);
 document.getElementById('start-button').addEventListener('click', clickStartHandler);
-canvas.drawGrid();
+document.getElementById('clear-button').addEventListener('click', init);
+const sizeCellInput = document.getElementById('size-cell');
+sizeCellInput.defaultValue = sizeCell;
+sizeCellInput.addEventListener('input', sizeCellInputChange);

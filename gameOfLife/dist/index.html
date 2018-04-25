@@ -10,25 +10,39 @@
       height: 90vh;
       display:flex;
     }
-    #container {
-      width: 500px;
-      height: 500px;
+    #canvas {
+      border: 1px solid gray;
+      width: 800px;
+      height: 600px;
       margin: auto;
     }
-    canvas {
-      border: 1px solid gray;
+    #start-button {
+      height: 30px;
+      width: 100%;
     }
-    button {
-      height: 50px;
+    #control-block {
       width: 100px;
+    }
+    #clear-button {
+      height: 30px;
+      width: 100%;
+      margin-top:10px;
+    }
+    #size-cell {
+      width: 100%;
+      margin-top: 10px;
+      height:25px;
+      box-sizing: border-box;
     }
   </style>
 </head>
 <body>
-  <div id="container">
-    <canvas id="canvas" height="500" width="500"></canvas>
+  <canvas id="canvas" height="600" width="800"></canvas>
+  <div id="control-block">
+    <button id="start-button">Start</button>
+    <button id="clear-button">Clear</button>
+    <input placeholder="Size cell" id="size-cell" type="number" min="10">
   </div>
-  <button id="start-button">Start</button>
   <script src="./bundle.js"></script>
 </body>
 </html>
